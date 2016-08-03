@@ -12,7 +12,12 @@ function parseMetadata(f)
         if line:sub(1, 1) ~= "@" then
             break
         end
-        
+        local _, _, k, v = line:find("@([^%s]*) (.*)")
+        local i = 1
+        local dArray = {}
+        while i <= #v do
+            local iv = line:find(
+
 
 function readAPI(f)
     local data = {}
