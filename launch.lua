@@ -60,6 +60,74 @@ for _, v in ipairs(fs.list("/.APIS")) do
     end
 end
 
+local copyTable
+do
+    local copyTableRaw(t1, t2, seen, nextIters)
+        local function parse(k, v)
+            if type(v) == "table" then
+                if not seen[v] then
+                    local newT = {}
+                    seen[v] = newT
+                    t2[k] = newT
+                    nextIters[#nextIters + 1] = {v, newT}
+                else
+                    t2[k] = seen[v]
+                end
+            else
+                t2[k] = v
+            end
+        end
+        for k, v in ipairs(t1) do parse(k, v) end
+        for k, v in pairs(t1) do parse(k, v) end
+    end
+    copyTable = function(t)
+        local newT = {}
+        local seen, nextIters = {}, {{t, newT}}
+        while nextIters[1] do
+            copyTableRaw(nextIters[1][1], nextIters[1][2], seen, nextIters)
+            table.remove(nextIters, 1)
+        end
+        return newT
+    end
+end
+
+local users = {
+    root = {
+        default = 7,
+        except = {},
+        status = 0
+    }
+}
+
+local function createUser(name, def, status)
+    def = def ~= nil and def or 3
+    if type(name) ~= "string" or name == "" or type(def) ~= number or def < 0 or def > 7 then
+        return false, "Invalid parameters"
+    end
+    if users[name] then
+        return false, "User already exists"
+    else
+        users[name] = {
+            default = def,
+            except = {},
+            status = status
+        }
+    end
+end
+
+local function getFileOperation(user, file, op)
+local modEnv = copyTable(_G)
+
+do
+    modEnv.fs.open = function(file)
+
+local processes = {}
+local function get(self, t, kList)
+    if
+
+local function createProccess(data, name, parent, permissions)
+    local 
+
 function getPermName
 
 function askNewPermit(puid, name)
