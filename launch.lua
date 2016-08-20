@@ -1,3 +1,9 @@
+[[
+@owner root
+@group NULL
+@perms 7-4
+]]
+
 function parseMetadata(f)
     local data = {}
     local f = fs.open(f, "r")
@@ -95,9 +101,19 @@ local users = {
     root = {
         default = 7,
         except = {},
-        status = 0
+        hasRoot = true
     }
 }
+
+local isUserValid(u)
+    return type(u) == "string" and u:gsub("[%w-_]", "") == ""
+end
+
+local function saveUsers()
+    local 
+    local isFirst = true
+    for user, udata in pairs(users) do
+        
 
 local function createUser(name, def, status)
     def = def ~= nil and def or 3
